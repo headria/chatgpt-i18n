@@ -48,15 +48,19 @@ const Translate: React.FC = (props) => {
     const requestTranslation = useCallback(async () => {
         setLoading(true);
         try {
+            console.log({ originalContent });
             const compressedContent = compressJson(originalContent);
             const data = await translate(compressedContent, lang);
             setTransContent(prettierJson(data));
         } catch (error) {
-            notify({
-                title: "translate service error",
-                message: `${error}`,
-                type: "error",
-            }, 3000)
+            notify(
+                {
+                    title: "translate service error",
+                    message: `${error}`,
+                    type: "error",
+                },
+                3000
+            );
         } finally {
             setLoading(false);
         }
@@ -106,11 +110,14 @@ const Translate: React.FC = (props) => {
                             <DocumentDuplicateIcon
                                 onClick={() => {
                                     copy2Clipboard(transContent);
-                                    notify({
-                                        type: 'success',
-                                        title: 'copied!',
-                                        message: 'copy to clipboard',
-                                    }, 1000)
+                                    notify(
+                                        {
+                                            type: "success",
+                                            title: "copied!",
+                                            message: "copy to clipboard",
+                                        },
+                                        1000
+                                    );
                                 }}
                                 className="float-right w-4 text-white cursor-pointer hover:scale-110"
                             />
